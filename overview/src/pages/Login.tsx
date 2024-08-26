@@ -1,19 +1,32 @@
 import React, { FormEvent, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { userServiceLogin } from '../services/userService'
+import { IUser } from '../models/IUser'
 
 function Login() {
 
   const navigate = useNavigate()  
 
+  const [errorMessage, setErrorMessage] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const userLogin = (evt: FormEvent) => {
     evt.preventDefault() // sayfayı yenilemeyi durdur.
-    if (username === 'ali01' && password === '12345') {
-        //window.location.href = '/dashboard'
-        navigate('/dashboard')
-    }
+    setErrorMessage('')
+    userServiceLogin(username, password).then(res => {
+        const dt = res.data
+        const json = JSON.stringify(dt)
+        localStorage.setItem('user', json)
+    }).catch(err => {
+        const status = err.status
+        const errmessage = err.message
+        const serverMessage = err.response.data.message
+        console.log(status, errmessage, serverMessage)
+        setErrorMessage(serverMessage)
+    })
+    //window.location.href = '/dashboard'
+    //navigate('/dashboard')
   }  
 
   return (
@@ -22,6 +35,12 @@ function Login() {
             <div className='col-sm-4'></div>
             <div className='col-sm-4'>
                 <h2>User Login</h2>
+                { errorMessage !== '' &&  
+                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {errorMessage}
+                        <button onClick={() => setErrorMessage('')} type="button" className="btn-close" aria-label="Close"></button>
+                    </div>
+                }
                 <form onSubmit={userLogin}>
                     <div className='mb-3'>
                         <input required onChange={(evt) => setUsername(evt.target.value)} className='form-control' placeholder='Username' />

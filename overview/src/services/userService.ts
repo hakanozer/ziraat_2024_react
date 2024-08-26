@@ -1,9 +1,10 @@
+import { IUser } from "../models/IUser"
 import { config } from "./config"
 
-export const userLogin = (username: string, password: string) => {
+export const userServiceLogin = (username: string, password: string) => {
     const sendObj = {
         username: username,
         password: password
     }
-    return config.post('auth/login', sendObj)
+    return config.post<IUser>('auth/login', sendObj)
 }
