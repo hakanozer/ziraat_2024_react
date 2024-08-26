@@ -1,0 +1,20 @@
+npx create-react-app overview --template typescript
+
+
+Eklentiler
+Ad: ES7+ React/Redux/Rueact-Native snippets
+VS Market bağlantısı: https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+
+Kimlik: vscode-icons-team.vscode-icons
+VS Market bağlantısı: https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons
+
+Ad: Simple React Snippets
+VS Market bağlantısı: https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets
+
+
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+      },
