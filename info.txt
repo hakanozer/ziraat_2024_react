@@ -1,5 +1,6 @@
 npx create-react-app overview --template typescript
 
+npm install --save-dev ajv@^7
 
 Eklentiler
 Ad: ES7+ React/Redux/Rueact-Native snippets
