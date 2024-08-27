@@ -1,17 +1,26 @@
-import React from 'react'
-import { getUser } from '../utils/util'
-
+import React, { useEffect, useState } from 'react'
+import { allProduct } from '../services/productService'
+import { Product } from '../models/IProducts'
+import ProductItem from '../components/ProductItem'
 
 function Dashboard() {
-  const user = getUser()
-  if (user) {
-    console.log(user.token)
-  }
-  
 
+  const [arr, setArr] = useState<Product[]>([])
+  useEffect(() => {
+    allProduct().then(res => {
+      const dt = res.data
+      setArr(dt.products)
+      console.log(dt)
+    })
+  }, [])
+  
   return (
     <>
-     <h2>Dashboard</h2>
+    <div className='row'>
+      { arr.map((item, index) => 
+        <ProductItem key={index} item={item} />
+      )}
+    </div>
     </>
   )
 }
