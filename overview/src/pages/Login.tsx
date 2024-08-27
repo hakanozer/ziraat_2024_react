@@ -2,14 +2,15 @@ import React, { FormEvent, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { userServiceLogin } from '../services/userService'
 import { IUser } from '../models/IUser'
+import { encrypt } from '../utils/util'
 
 function Login() {
 
   const navigate = useNavigate()  
 
   const [errorMessage, setErrorMessage] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('emilys')
+  const [password, setPassword] = useState('emilyspass')
 
   const userLogin = (evt: FormEvent) => {
     evt.preventDefault() // sayfayı yenilemeyi durdur.
@@ -17,7 +18,9 @@ function Login() {
     userServiceLogin(username, password).then(res => {
         const dt = res.data
         const json = JSON.stringify(dt)
-        localStorage.setItem('user', json)
+        const cipherText = encrypt(json)
+        localStorage.setItem('user', cipherText)
+        navigate('/dashboard')
     }).catch(err => {
         const status = err.status
         const errmessage = err.message
@@ -25,8 +28,6 @@ function Login() {
         console.log(status, errmessage, serverMessage)
         setErrorMessage(serverMessage)
     })
-    //window.location.href = '/dashboard'
-    //navigate('/dashboard')
   }  
 
   return (
@@ -43,13 +44,13 @@ function Login() {
                 }
                 <form onSubmit={userLogin}>
                     <div className='mb-3'>
-                        <input required onChange={(evt) => setUsername(evt.target.value)} className='form-control' placeholder='Username' />
+                        <input defaultValue={username} required onChange={(evt) => setUsername(evt.target.value)} className='form-control' placeholder='Username' />
                     </div>
                     <div className='mb-3'>
-                        <input required onChange={(evt) => setPassword(evt.target.value)} type='password' className='form-control' placeholder='Password' />
+                        <input defaultValue={password} required onChange={(evt) => setPassword(evt.target.value)} type='password' className='form-control' placeholder='Password' />
                     </div>
                     <button className='btn btn-success'>Send</button>
-                    <NavLink to='/register'>Register</NavLink>
+                    <NavLink to='/register' className='btn btn-danger'>Register</NavLink>
                 </form>
             </div>
             <div className='col-sm-4'></div>
