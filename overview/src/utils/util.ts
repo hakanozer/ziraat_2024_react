@@ -29,6 +29,26 @@ export const getUser = () => {
     return null
 }
 
+
+export const likeControl = (id: number) => {
+    const stLikes = localStorage.getItem('likes')
+    if (stLikes) {
+        const arr = JSON.parse(stLikes) as number[]
+        const index = arr.findIndex(item => item === id)
+        if (index > -1) {
+            arr.splice(index, 1)
+        }else {
+            arr.push(id)
+        }
+        const stArr = JSON.stringify(arr)
+        localStorage.setItem('likes',  stArr)
+    }else {
+        const arr = [id]
+        const stArr = JSON.stringify(arr)
+        localStorage.setItem('likes',  stArr)
+    }
+}
+
 //const data = 'data'
 //export const age = 100
 //export default data
