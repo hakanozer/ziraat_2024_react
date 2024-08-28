@@ -1,19 +1,45 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 
 function Profile() {
 
-  const sendForm = (evt: FormEvent) => {
+  const [nameData, setNameData] = useState('')
 
+  const nameRef = useRef<HTMLInputElement>(null)
+  const surnameRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef(null)
+  useEffect(() => {
+    if (nameRef && nameRef.current) {
+      nameRef.current.focus()
+      //nameRef.current.style.backgroundColor = 'red'
+    }
+  }, [])
+
+  const sendForm = (evt: FormEvent) => {
+    evt.preventDefault()
+    const name = nameRef.current?.value
+    const surname = surnameRef.current?.value
+    console.log(name, surname)
+    if (name === '') {
+      nameRef.current?.focus()
+    }else if (surname === '') {
+      surnameRef.current?.focus()
+    }else {
+      console.log("form Send")
+    }
   }
+
+  useEffect(() => {
+    console.log(nameData)
+  }, [nameData])
 
   return (
     <>
-        <form onSubmit={sendForm}>
+        <form ref={formRef} onSubmit={sendForm} className='mt-3 col-sm-4'>
           <div className='mb-3'>
-            <input className='form-control' placeholder='Name' />
+            <input onChange={(evt) => setNameData(evt.target.value)} ref={nameRef} className='form-control' placeholder='Name' />
           </div>
           <div className='mb-3'>
-            <input className='form-control' placeholder='Surname' />
+            <input ref={surnameRef} className='form-control' placeholder='Surname' />
           </div>
           <button className='btn btn-danger'>Send</button>
         </form>
