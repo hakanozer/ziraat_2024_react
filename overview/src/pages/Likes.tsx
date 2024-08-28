@@ -29,7 +29,25 @@ function Likes() {
     })
     setArr(arrPro)
    })
+
+   /*
+   findByProductId('1').then(pro1 => {
+    findByProductId('2').then( pro2 => {
+
+    })
+   })
+    */
+
   }, [])
+
+  useEffect(() => {
+    callAll()
+  }, [])
+
+  const callAll =  async () => {
+    const ser1 = await findByProductId('1')
+    const ser2 = await findByProductId(ser1.data.id+'')
+  }
 
   return (
     <div>
