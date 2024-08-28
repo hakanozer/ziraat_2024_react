@@ -3,6 +3,10 @@ import { useLocation, useNavigate, useParams, useSearchParams } from 'react-rout
 import { Product } from '../models/IProducts'
 import { findByProductId } from '../services/productService'
 import { likeControl } from '../utils/util'
+import { useDispatch, useSelector } from 'react-redux'
+import { ILikeAction } from '../useRedux/ILikeAction'
+import { LikesEnum } from '../useRedux/LikesEnum'
+import { StateType } from '../useRedux/store'
 
 function ProductDetail() {
 
@@ -37,14 +41,29 @@ function ProductDetail() {
     }, [])
 
 
+    const selector = useSelector((item:StateType) => item.LikesReducer)
+    const [likesStatus, setLikesStatus] = useState(-1)
+    useEffect(() => {
+        if (id) {
+            const index = selector.findIndex(item => item === Number(id))
+            setLikesStatus(index)
+        }
+    }, [selector])
+
     useEffect(() => {
         if (productItem && productItem.images[0]) {
             setBigImage(productItem.images[0])
         }
     }, [productItem])
 
+  const dispatch = useDispatch()  
   const addRemoveLike = (id: number) => {
     likeControl(id)
+    const sendObj:ILikeAction = {
+        type: LikesEnum.LIKE_ADD,
+        payload: id
+    }
+    dispatch(sendObj)
   }  
   return (
     <>
@@ -54,7 +73,7 @@ function ProductDetail() {
                     <h2>{productItem.title}</h2>
                     <p>{productItem.description}</p>
                     <h3>{productItem.price}</h3>
-                    <i onClick={ () => addRemoveLike(productItem.id) } role='button' className="bi bi-suit-heart" style={{fontSize: 30,}}></i>
+                    <i onClick={ () => addRemoveLike(productItem.id) } role='button' className="bi bi-suit-heart-fill" style={{fontSize: 30, color: likesStatus === -1 ? '' : 'red' }}></i>
                 </div>
                 <div className='col-sm-6'>
                     <img src={bigImage} className='img-fluid' />

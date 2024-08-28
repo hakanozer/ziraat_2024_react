@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { IUser } from '../models/IUser'
+import { useDispatch, useSelector } from 'react-redux'
+import { StateType } from '../useRedux/store'
+import { getAllLikes } from '../utils/util'
+import { ILikeAction } from '../useRedux/ILikeAction'
+import { LikesEnum } from '../useRedux/LikesEnum'
 
 function NavBar( props: {user: IUser} ) {
+  
+  const dispatch = useDispatch()  
+  const selector = useSelector((item:StateType) => item.LikesReducer)
+  useEffect(() => {
+    const arr = getAllLikes()
+    arr.forEach(item => {
+        const sendObj: ILikeAction = {
+            type: LikesEnum.LIKE_ADD,
+            payload: item
+        }
+        dispatch(sendObj)
+    })
+  }, [])
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
@@ -18,6 +37,9 @@ function NavBar( props: {user: IUser} ) {
             <li className="nav-item">
                 <NavLink className="nav-link" to='/profile'>Profile</NavLink>
             </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" to='/likes'>Likes</NavLink>
+            </li>
             <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown
@@ -30,7 +52,7 @@ function NavBar( props: {user: IUser} ) {
             </ul>
             </li>
             <li className="nav-item">
-            <a className="nav-link disabled" aria-disabled="true">{props.user.firstName} {props.user.lastName}</a>
+            <a className="nav-link disabled" aria-disabled="true">{props.user.firstName} {props.user.lastName} ({selector.length})</a>
             </li>
         </ul>
         <form className="d-flex" role="search">

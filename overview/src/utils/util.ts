@@ -49,6 +49,15 @@ export const likeControl = (id: number) => {
     }
 }
 
+export const getAllLikes = () => {
+    const stLikes = localStorage.getItem('likes')
+    if (stLikes) {
+        const arr = JSON.parse(stLikes) as number[]
+        return arr
+    }
+    return []
+}
+
 //const data = 'data'
 //export const age = 100
 //export default data
