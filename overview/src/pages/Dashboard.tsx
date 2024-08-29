@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { allProduct } from '../services/productService'
 import { Product } from '../models/IProducts'
 import ProductItem from '../components/ProductItem'
+import Seo from '../components/Seo'
 
 function Dashboard() {
 
@@ -16,6 +17,7 @@ function Dashboard() {
   
   return (
     <>
+    <Seo title='Products' desc='Products Desc' />
     <div className='row'>
       { arr.map((item, index) => 
         <ProductItem key={index} item={item} />

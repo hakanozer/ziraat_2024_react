@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { IUser } from '../models/IUser'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,9 +6,12 @@ import { StateType } from '../useRedux/store'
 import { getAllLikes } from '../utils/util'
 import { ILikeAction } from '../useRedux/ILikeAction'
 import { LikesEnum } from '../useRedux/LikesEnum'
+import { Context } from '../utils/AppContext'
 
 function NavBar( props: {user: IUser} ) {
-  
+
+  const context = useContext(Context)
+
   const dispatch = useDispatch()  
   const selector = useSelector((item:StateType) => item.LikesReducer)
   useEffect(() => {
@@ -48,7 +51,7 @@ function NavBar( props: {user: IUser} ) {
             </li>
             <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                {context.email}
             </a>
             <ul className="dropdown-menu">
                 <li><a className="dropdown-item" href="#">Action</a></li>

@@ -23,7 +23,7 @@ const route =
         <Route path='/register' element={<Register/>} />
         <Route path='/dashboard' element={ <Control item={<Dashboard />} />  } />
         <Route path='/profile' element={ <Control item={<Profile />} />  } />
-        <Route path='/productDetail/:id' element={ <Control item={<ProductDetail />} />  } />
+        <Route path='/productDetail/:seotitle/:id' element={ <Control item={<ProductDetail />} />  } />
         <Route path='/likes' element={ <Control item={<Likes />} />  } />
       </Routes>
     </BrowserRouter>

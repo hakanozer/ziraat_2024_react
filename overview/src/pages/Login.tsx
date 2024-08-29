@@ -1,12 +1,15 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { userServiceLogin } from '../services/userService'
 import { IUser } from '../models/IUser'
 import { encrypt } from '../utils/util'
+import { Context } from '../utils/AppContext'
+import Seo from '../components/Seo'
 
 function Login() {
 
-  const navigate = useNavigate()  
+  const navigate = useNavigate() 
+  const context = useContext(Context) 
 
   const [errorMessage, setErrorMessage] = useState('')
   const [username, setUsername] = useState('emilys')
@@ -20,6 +23,7 @@ function Login() {
         const json = JSON.stringify(dt)
         const cipherText = encrypt(json)
         localStorage.setItem('user', cipherText)
+        context.setEmail(dt.email)
         navigate('/dashboard', {replace: true})
     }).catch(err => {
         const status = err.status
@@ -30,8 +34,11 @@ function Login() {
     })
   }  
 
+
+
   return (
     <>
+        <Seo title='Login Page' desc='Login Desc' />
         <div className='row'>
             <div className='col-sm-4'></div>
             <div className='col-sm-4'>

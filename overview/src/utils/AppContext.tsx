@@ -10,7 +10,7 @@ const contextData: IContext = {
     setEmail: () => {}
 } 
 
-const Context = createContext<IContext>(contextData)
+export const Context = createContext<IContext>(contextData)
 
 export const AppProvider: FC<PropsWithChildren> = ( props ) => {
 

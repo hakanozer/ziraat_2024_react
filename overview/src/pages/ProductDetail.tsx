@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ILikeAction } from '../useRedux/ILikeAction'
 import { LikesEnum } from '../useRedux/LikesEnum'
 import { StateType } from '../useRedux/store'
+import Seo from '../components/Seo'
 
 function ProductDetail() {
 
@@ -68,6 +69,8 @@ function ProductDetail() {
   return (
     <>
         { productItem &&
+            <>
+            <Seo title={productItem.title} desc={productItem.description} />
             <div className='row'>
                 <div className='col-sm-6'>
                     <h2>{productItem.title}</h2>
@@ -83,6 +86,7 @@ function ProductDetail() {
                     )}
                 </div>
             </div>
+            </>
         }
     </>
   )
