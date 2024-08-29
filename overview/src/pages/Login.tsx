@@ -20,7 +20,7 @@ function Login() {
         const json = JSON.stringify(dt)
         const cipherText = encrypt(json)
         localStorage.setItem('user', cipherText)
-        navigate('/dashboard')
+        navigate('/dashboard', {replace: true})
     }).catch(err => {
         const status = err.status
         const errmessage = err.message

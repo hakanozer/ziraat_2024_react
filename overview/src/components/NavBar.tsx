@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { IUser } from '../models/IUser'
 import { useDispatch, useSelector } from 'react-redux'
 import { StateType } from '../useRedux/store'
@@ -21,6 +21,12 @@ function NavBar( props: {user: IUser} ) {
         dispatch(sendObj)
     })
   }, [])
+
+  const navigate = useNavigate()
+  const logout = () => {
+    localStorage.removeItem('user')
+    navigate('/', {replace: true})
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -48,7 +54,7 @@ function NavBar( props: {user: IUser} ) {
                 <li><a className="dropdown-item" href="#">Action</a></li>
                 <li><a className="dropdown-item" href="#">Another action</a></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li><a role='button' onClick={logout} className="dropdown-item">Logout</a></li>
             </ul>
             </li>
             <li className="nav-item">
