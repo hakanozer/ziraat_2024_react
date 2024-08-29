@@ -50,8 +50,9 @@ function Profile() {
             <input onChange={(evt) => setSurname(evt.target.value)} ref={surnameRef} className='form-control' placeholder='Surname' />
           </div>
           <button className='btn btn-danger'>Send</button>
+          <button onClick={call} className='btn btn-success'>Call</button>
         </form>
-        <button onClick={call} className='btn btn-danger'>Call</button>
+        
     </>
   )
 }
