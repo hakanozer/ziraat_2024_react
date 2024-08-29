@@ -29,12 +29,21 @@ function Register() {
           <form onSubmit={handleSubmit}>
             <div className='mb-3'>
               <input name='nameSurname' onChange={handleChange} className='form-control' placeholder='Name / Surname' />
+              { errors.nameSurname &&
+                <div className='text-danger'>{errors.nameSurname}</div>
+              }
             </div>
             <div className='mb-3'>
               <input name='email' onChange={handleChange} className='form-control' placeholder='E-Mail' />
+              { errors.email &&
+                <div className='text-danger'>{errors.email}</div>
+              }
             </div>
             <div className='mb-3'>
               <input name='password' onChange={handleChange} type='password' className='form-control' placeholder='Password' />
+              { errors.password &&
+                <div className='text-danger'>{errors.password}</div>
+              }
             </div>
             <button type='submit' className='btn btn-success'>Send</button>
           </form>
